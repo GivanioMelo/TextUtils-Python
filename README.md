@@ -99,8 +99,19 @@ printTitleBarRoundBorder("Title Bar", boxColor=GREEN, textColor=YELLOW)
 ![image](https://github.com/user-attachments/assets/14b3fd93-5686-4e3f-b01b-75d2ae4fe12b)
 ![image](https://github.com/user-attachments/assets/616c1e7c-4055-4cf0-81d0-b474d6da18d4)
 
-## Table Funcionality
+## Progress Bars
+you can create progressbar (and animate then quite easly) using the function printProgressBar
 
+```python
+tx.printProgressBar(0, 1)
+tx.printProgressBar(25, 4)
+tx.printProgressBar(50, 7)
+tx.printProgressBar(75, 10)
+tx.printProgressBar(90, 13)
+```
+<img width="1129" height="349" alt="Captura de tela 2026-03-04 145645" src="https://github.com/user-attachments/assets/e83e1618-e3a8-4898-8bb7-9a5e6ceffbc8" />
+
+## Table Funcionality
 You can create symple tables providing the data in lists with or without headers
 
 ```python
