@@ -172,7 +172,20 @@ def drawTableGrid(x,y,w,h,cellWidth, color=WHITE):
 
 	print(RESET,end="")
 
-def drawTable(x,y,cellWidth, data, gridColor=WHITE, dataColor=WHITE):
+LEFT = 0
+CENTER = 1
+RIGHT = 2
+def printAligned(text:str, width:int, alignment:int, color:str=WHITE):
+	if alignment == LEFT:
+		printColored(text.ljust(width), color, end="")
+	elif alignment == CENTER:
+		printColored(text.center(width), color, end="")
+	elif alignment == RIGHT:
+		printColored(text.rjust(width), color, end="")
+	else:
+		printColored(text.ljust(width), color, end="")
+
+def drawTable(x,y,cellWidth, data, gridColor=WHITE, dataColor=WHITE,alignments=None):
 	w = len(data[0])
 	h = len(data)	
 	
@@ -192,9 +205,12 @@ def drawTable(x,y,cellWidth, data, gridColor=WHITE, dataColor=WHITE):
 			textX = x + (i*cellWidth) + i + 1
 			textY = y + j + (j*1) + 1
 			gotoxy(textX,textY)
-			printColored(cellText,dataColor,end="")
+			if alignments is not None and i < len(alignments):
+				printAligned(cellText, cellWidth, alignments[i], dataColor)
+			else:
+				printColored(cellText,dataColor,end="")
 
-def drawTableWithHeaders(x,y,cellWidth, headers, data, gridColor=WHITE, dataColor=WHITE, headerColor=BRIGHT_CYAN):
+def drawTableWithHeaders(x,y,cellWidth, headers, data, gridColor=WHITE, dataColor=WHITE, headerColor=BOLD_WHITE, alignments=None):
 	w = len(headers)
 	h = len(data) + 1
 	
@@ -213,7 +229,10 @@ def drawTableWithHeaders(x,y,cellWidth, headers, data, gridColor=WHITE, dataColo
 		textX = x + (i*cellWidth) + i + 1
 		textY = y + 1
 		gotoxy(textX,textY)
-		printColored(cellText,headerColor,end="")
+		if alignments is not None and i < len(alignments):
+			printAligned(cellText, cellWidth, alignments[i], headerColor)
+		else:
+			printColored(cellText,headerColor,end="")
 
 	for j in range(len(data)):
 		for i in range(w):
@@ -224,7 +243,10 @@ def drawTableWithHeaders(x,y,cellWidth, headers, data, gridColor=WHITE, dataColo
 			textX = x + (i*cellWidth) + i + 1
 			textY = y + j + (j*1) + 3
 			gotoxy(textX,textY)
-			printColored(cellText,dataColor,end="")
+			if alignments is not None and i < len(alignments):
+				printAligned(cellText, cellWidth, alignments[i], dataColor)
+			else:
+				printColored(cellText,dataColor,end="")
 
 # prints a title bar on the top of console with centered text...
 # suport box color and text color
