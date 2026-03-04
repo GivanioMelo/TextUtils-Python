@@ -104,14 +104,14 @@ printTitleBarRoundBorder("Title Bar", boxColor=GREEN, textColor=YELLOW)
 You can create symple tables providing the data in lists with or without headers
 
 ```python
-# data = [
-# 	["Name", "Age", "City"],
-# 	["Alice", 25, "New York"],
-# 	["Bob", 30, "Los Angeles"],
-# 	["Charlie", 35, "Chicago"],
-# 	["Diana", 28, "Houston"]
-# ]
-# TextUtils.drawTable(1,1,15,data)
+data = [
+	["Name", "Age", "City"],
+	["Alice", 25, "New York"],
+	["Bob", 30, "Los Angeles"],
+	["Charlie", 35, "Chicago"],
+	["Diana", 28, "Houston"]
+]
+TextUtils.drawTable(1,1,15,data)
 ```
 <img width="584" height="277" alt="Captura de tela 2026-03-04 111307" src="https://github.com/user-attachments/assets/d2a3e701-5176-41e3-b05f-d66b23dd388a" />
 
