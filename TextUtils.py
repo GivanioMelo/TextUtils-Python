@@ -1,4 +1,5 @@
 import os
+import platform
 
 BLACK = '\033[30m'
 RED = '\033[31m'
@@ -131,6 +132,100 @@ def drawDoubleBorderBox(x,y,w,h, color=WHITE): drawBox(x,y,w,h,color,DOUBLE_BORD
 def drawBroadBorderBox(x,y,w,h, color=WHITE): drawBox(x,y,w,h,color,BROAD_BORDER_CHARSET)
 def drawRoundBorderBox(x,y,w,h, color=WHITE): drawBox(x,y,w,h,color,ROUND_BORDER_CHARSET)
 
+#draw tables and grids
+def drawTableGrid(x,y,w,h,cellWidth, color=WHITE):
+	gotoxy(x,y)
+
+	renderWidth = (w+1) + (w*cellWidth)
+	renderheight = (h+1) + (h)
+
+	if renderWidth > 120 - x: printError("Table width exceeds console width...")
+	if renderheight > 30 - y: printError("Table height exceeds console height...")
+
+	drawBox(x,y,renderWidth,renderheight,color)
+
+	for i in range(1,w):
+		rx = x + (i*cellWidth) + i
+		gotoxy(rx,y); printColored("┬", color, end="")
+		gotoxy(rx,y+renderheight-1); printColored("┴", color, end="")
+	
+	for j in range(1,h):
+		ry = y + j + (j*1)
+		gotoxy(x,ry); printColored("├", color, end="")
+		gotoxy(x+renderWidth-1,ry); printColored("┤", color, end="")
+
+	for i in range(1,w):
+		rx = x + (i*cellWidth) + i
+		for j in range(y+1,renderheight):
+			gotoxy(rx,j); printColored("│", color, end="")
+
+	for j in range(1,h):
+		ry = y + j + (j*1)
+		for i in range(x+1,renderWidth):
+			gotoxy(i,ry); printColored("─", color, end="")
+
+	for i in range(1,w):
+		for j in range(1,h):
+			rx = x + (i*cellWidth) + i
+			ry = y + j + (j*1)
+			gotoxy(rx,ry); printColored("┼", color, end="")
+
+	print(RESET,end="")
+
+def drawTable(x,y,cellWidth, data, gridColor=WHITE, dataColor=WHITE):
+	w = len(data[0])
+	h = len(data)	
+	
+	renderWidth = (w+1) + (w*cellWidth)
+	renderheight = (h+1) + (h)
+	if renderWidth > 120 - x: printError("Table width exceeds console width...");return
+	if renderheight > 30 - y: printError("Table height exceeds console height...");return
+
+	drawTableGrid(x,y,w,h,cellWidth,gridColor)
+
+	for j in range(h):
+		for i in range(w):
+			cellText = str(data[j][i])
+			if type(cellText) == float: cellText = f"{cellText:.2f}"
+			if len(cellText) > cellWidth:
+				cellText = trim(str(cellText), cellWidth-1) + "…"
+			textX = x + (i*cellWidth) + i + 1
+			textY = y + j + (j*1) + 1
+			gotoxy(textX,textY)
+			printColored(cellText,dataColor,end="")
+
+def drawTableWithHeaders(x,y,cellWidth, headers, data, gridColor=WHITE, dataColor=WHITE, headerColor=BRIGHT_CYAN):
+	w = len(headers)
+	h = len(data) + 1
+	
+	renderWidth = (w+1) + (w*cellWidth)
+	renderheight = (h+1) + (h)
+	if renderWidth > 120 - x: printError("Table width exceeds console width...");return
+	if renderheight > 30 - y: printError("Table height exceeds console height...");return
+
+	drawTableGrid(x,y,w,h,cellWidth,gridColor)
+
+	for i in range(w):
+		cellText = str(headers[i])
+		if type(cellText) == float: cellText = f"{cellText:.2f}"
+		if len(cellText) > cellWidth:
+			cellText = trim(str(cellText), cellWidth-1) + "…"
+		textX = x + (i*cellWidth) + i + 1
+		textY = y + 1
+		gotoxy(textX,textY)
+		printColored(cellText,headerColor,end="")
+
+	for j in range(len(data)):
+		for i in range(w):
+			cellText = str(data[j][i])
+			if type(cellText) == float: cellText = f"{cellText:.2f}"
+			if len(cellText) > cellWidth:
+				cellText = trim(str(cellText), cellWidth-1) + "…"
+			textX = x + (i*cellWidth) + i + 1
+			textY = y + j + (j*1) + 3
+			gotoxy(textX,textY)
+			printColored(cellText,dataColor,end="")
+
 # prints a title bar on the top of console with centered text...
 # suport box color and text color
 # it assumes the default 120 x 30 windows console
@@ -245,5 +340,4 @@ def inputFloatxy(x:int, y:int, message:str) -> float:
     while True:
         gotoxy(x,y)
         try: value = float(input(message)); return value
-
-        except: printError("Input data must be an floating point number...")
+        except: printError("Input data must be a floating point number...")
