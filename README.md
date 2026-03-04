@@ -99,4 +99,36 @@ printTitleBarRoundBorder("Title Bar", boxColor=GREEN, textColor=YELLOW)
 ![image](https://github.com/user-attachments/assets/14b3fd93-5686-4e3f-b01b-75d2ae4fe12b)
 ![image](https://github.com/user-attachments/assets/616c1e7c-4055-4cf0-81d0-b474d6da18d4)
 
+## Table Funcionality
+
+You can create symple tables providing the data in lists with or without headers
+
+```python
+# data = [
+# 	["Name", "Age", "City"],
+# 	["Alice", 25, "New York"],
+# 	["Bob", 30, "Los Angeles"],
+# 	["Charlie", 35, "Chicago"],
+# 	["Diana", 28, "Houston"]
+# ]
+# TextUtils.drawTable(1,1,15,data)
+```
+<img width="584" height="277" alt="Captura de tela 2026-03-04 111307" src="https://github.com/user-attachments/assets/d2a3e701-5176-41e3-b05f-d66b23dd388a" />
+
+```python
+headers = ["Name", "Age", "City","Occupation","income (USD)"]
+data = [
+	["Alice", 25, "New York","Engineer", "75000.50"],
+	["Bob", 30, "Los Angeles","Designer", "65000.75"],
+	["Charlie", 35, "Chicago","Manager", "80000.00"],
+	["Diana", 28, "Houston","Developer", "70000.25"]
+]
+
+alignments = [TextUtils.LEFT, TextUtils.CENTER, TextUtils.LEFT, TextUtils.LEFT, TextUtils.RIGHT]
+
+TextUtils.clearScreen()
+TextUtils.drawTableWithHeaders(1,1,15,headers,data,gridColor=TextUtils.CYAN, headerColor=TextUtils.BOLD_CYAN, alignments=alignments)
+input()
+```
+<img width="1141" height="288" alt="Captura de tela 2026-03-04 110817" src="https://github.com/user-attachments/assets/e8d56cdd-fe9d-4666-9f05-36bdf50e2d88" />
 
