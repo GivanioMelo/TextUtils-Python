@@ -86,7 +86,14 @@ def trim(s:str, size:int)-> str:
 
 # clearScreen...
 def clearScreen():
-	os.system("cls")
+	sys = platform.system()
+	
+	# identify system and clear the screen (better compatibility)
+	if sys.lower() == "linux":
+		os.system("clear")
+
+	elif sys.lower() == "windows":
+		os.system("cls")
 
 SIMPLE_BORDER_CHARSET = ['┌','└','│','┐','│','┘','─','─']
 HEAVY_BORDER_CHARSET = ['┏','┗','┃','┓','┃','┛','━','━']
@@ -238,4 +245,5 @@ def inputFloatxy(x:int, y:int, message:str) -> float:
     while True:
         gotoxy(x,y)
         try: value = float(input(message)); return value
+
         except: printError("Input data must be an floating point number...")
